@@ -8,10 +8,12 @@ import rootReducer from './reducers';
 import setAuthToken from './utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 import { logoutUser, setCurrentUser } from './actions/authActions';
+import { clearCurrentProfile } from './actions/profileActions';
 
 import App from './App';
 
 import './index.css';
+
 import * as serviceWorker from './serviceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -36,7 +38,8 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     // logout user
     store.dispatch(logoutUser());
-    // TODO: clear current profile
+    // clear current profile
+    store.dispatch(clearCurrentProfile());
 
     // redirect to login
     window.location.href = '/login';
