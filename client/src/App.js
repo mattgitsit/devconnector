@@ -7,6 +7,7 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import CreateProfile from './components/create-profile/CreateProfile';
 
 import RequireAuth from './components/common/RequireAuth';
 
@@ -27,6 +28,11 @@ class App extends Component {
                 exact
                 path="/dashboard"
                 component={RequireAuth(Dashboard)}
+              />
+              <Route
+                exact
+                path="/create-profile"
+                component={RequireAuth(CreateProfile)}
               />
               <Footer />
             </Fragment>
