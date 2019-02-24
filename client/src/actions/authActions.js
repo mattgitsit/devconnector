@@ -54,7 +54,7 @@ export const loginUser = (userData, history) => async dispatch => {
   }
 };
 
-export const logoutUser = history => dispatch => {
+export const logoutUser = () => dispatch => {
   // remove token from local storage
   localStorage.removeItem('jwtToken');
 
@@ -63,8 +63,6 @@ export const logoutUser = history => dispatch => {
 
   // set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
-
-  history.push('/login');
 };
 
 export const setCurrentUser = decoded => {

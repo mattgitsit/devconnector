@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile } from '../../actions/profileActions';
+import { getCurrentProfile, editProfile } from '../../actions/profileActions';
 
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import InputGroup from '../common/InputGroup';
+import Spinner from '../layout/Spinner';
 
-export class CreateProfile extends Component {
+export class EditProfile extends Component {
   state = {
     displaySocialInputs: false,
     profile: {
@@ -28,6 +29,15 @@ export class CreateProfile extends Component {
     },
     errors: {}
   };
+
+  componentDidMount() {
+    this.props.getCurrentProfile();
+    if (!this.props.profile.profile) {
+      return <Spinner />;
+    }
+
+    console.log(this.props.profile.profile);
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.errors !== this.props.errors) {
@@ -54,7 +64,7 @@ export class CreateProfile extends Component {
 
     e.preventDefault();
 
-    const newProfile = {
+    const updProfile = {
       handle,
       company,
       website,
@@ -70,7 +80,7 @@ export class CreateProfile extends Component {
       instagram
     };
 
-    this.props.createProfile(newProfile, this.props.history);
+    this.props.editProfile(updProfile, this.props.history);
   };
 
   handleInputChange = e => {
@@ -172,10 +182,8 @@ export class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Create Your Profile</h1>
-              <p className="lead text-center">
-                Let's get some information to make your profile stand out
-              </p>
+              <h1 className="display-4 text-center">Edit Your Profile</h1>
+
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.handleFormSubmit}>
                 <TextFieldGroup
@@ -266,7 +274,7 @@ export class CreateProfile extends Component {
   }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -278,5 +286,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
-)(CreateProfile);
+  { getCurrentProfile, editProfile }
+)(EditProfile);

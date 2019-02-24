@@ -18,6 +18,7 @@ const InputGroup = ({
         </span>
       </div>
       <input
+        autoComplete="off"
         type={type}
         className={`form-control form-control-lg ${
           error ? 'is-invalid' : null
